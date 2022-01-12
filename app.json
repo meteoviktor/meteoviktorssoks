@@ -9,7 +9,7 @@
     },
      "PASSWORD": {
       "description": "The password of shadowsocks, you can use uuid as the password (http://www.uuid.online/ online generation)",
-      "value": "5c301bb8-6c77-41a0-a606-4ba11bbab084"
+      "value": "e1066b00-55dd-577c-b668-6d6558bae6bd"
     },
 
      "V2_Path": {
@@ -24,7 +24,7 @@
 
     "QR_Path": {
        "description": "QR code and configuration link path, the default qr_img, you can also use uuid for confidentiality, but it cannot be the same as V2_Path. If the AppName variable is no, this variable has no effect",
-       "value": "/qr"
+       "value": "/56d004b58d095fc68bdba7efb26a8538"
      }
   },
   "website": "",
