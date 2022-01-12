@@ -25,11 +25,11 @@ An email address that can receive verification codes normally (@qq.com, @163.com
 # Шаг 4. Запуск
 Нажать Deploy app.
 После завершения сборки и запуска QR-код с конфигурацией для мобильных устройств будет доступен по адресу
-https://<APPNAME>.herokuapp.com/<QR>/vpn.png
+https://\<APPNAME\>.herokuapp.com/\<QR\>/vpn.png
 
 строка с конфигурацией в виде URL доступна по адресу (косая черта на конце обязательна):
-https://<APPNAME>.herokuapp.com/<QR>/
-где <APPNAME> - выбранное имя, <QR> путь к QR-коду.
+https://\<APPNAME\>.herokuapp.com/\<QR\>/
+где \<APPNAME\> - выбранное имя, \<QR\> путь к QR-коду.
 
 # Шаг 5. Настройка мобильного клиента на примере Android
 - Установить на устройство [shadowsocks](https://play.google.com/store/apps/details?id=com.github.shadowsocks) и [плагин v2ray к нему](https://play.google.com/store/apps/details?id=com.github.shadowsocks.plugin.v2ray). 
