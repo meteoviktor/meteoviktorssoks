@@ -1,69 +1,45 @@
-# Personal VPN
-## Shadowsocks+V2Ray-plugin
 
-Click the button below to deploy to Heroku
+# Вступление
+Взято с <https://habr.com/ru/post/555768/>
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/meteoviktor/meteoviktorssoks/tree/main)
+В руководстве описано развёртывание сервера shadowsocks с плагином v2ray на облачном провайдере Heroku. Платформа Heroku позволяет бесплатно разворачивать небольшие веб-приложения, а плагин v2ray позволяет пропускать трафик shadowsocks внутри websocket-соединения, что и позволяет запускать всю конструкцию на Heroku.
 
-## 0. Attention
+В руководстве используется проект готового приложения для Heroku, которое реализует всё необходимое автоматически.
 
-Deployment requires registration of a heroku account, a email is required when registering a heroku account (otherwise the verification code cannot be brushed out). 
-
+# Шаг 1. Регистрация в сервисе Heroku
+Зайти на сайт Heroku, нажать Sign up и заполнить требуемые сведения. Для регистрации нужна только электронная почта.
 An email address that can receive verification codes normally (@qq.com, @163.com are not acceptable):
 - gmail (Best) 
 - Outlook <https://login.live.com/> here.
 
-## 1. Verification
+# Шаг 2. Начало развёртывания
+Нажать на эту ссылку:
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/meteoviktor/meteoviktorssoks/tree/main)
 
-After the server is deployed, open app to display the webpage normally. After the address is filled with the path (for example: <https://test.herokuapp.com/static>), the 403 page is displayed, which means the deployment is successful.
+# Шаг 3. Конфигурирование
+В появившейся форме заменить следующие поля:
+- "App Name" и AppName вписать уникальное имя одинаковое в обоих полях. Это имя станет частью доменного имени <appname>.herokuapp.com, по которому станет доступен сервис.
+- Задать свой пароль подлиннее и понадёжнее - его не придётся вводить вручную.
+- Сменить путь QR на какое-нибудь трудноугадываемое значение.
+  
+# Шаг 4. Запуск
+Нажать Deploy app.
+После завершения сборки и запуска QR-код с конфигурацией для мобильных устройств будет доступен по адресу
+https://<APPNAME>.herokuapp.com/<QR>/vpn.png
 
-## 2. Client Configuration
+строка с конфигурацией в виде URL доступна по адресу (косая черта на конце обязательна):
+https://<APPNAME>.herokuapp.com/<QR>/
+где <APPNAME> - выбранное имя, <QR> путь к QR-коду.
 
-QR code address: https://test.herokuapp.com/qr/vpn.png
+# Шаг 5. Настройка мобильного клиента на примере Android
+- Установить на устройство [shadowsocks](https://play.google.com/store/apps/details?id=com.github.shadowsocks) и [плагин v2ray к нему](https://play.google.com/store/apps/details?id=com.github.shadowsocks.plugin.v2ray). 
+- Запустить приложение и добавьте новый профиль кнопкой с плюсом в правом верхнем углу.
+- Выбрать сканирование QR-кода.
+- Выбрать созданный профиль касанием.
+- Запустить соединение нажатием на круглую кнопку внизу.
 
-(Change test to your own app name. If you changed the QR\_Path (path to qr png, filled during deployment) variable, also change the corresponding qr\_img to the modified one)
-
-Use the client (Shadowsocks recommended) to scan the QR code.
-
-**or**
-
-Use Configuration file -> Address: https://test.herokuapp.com/qr/
-
-(Change test to your own app name)
-
-Copy the details after opening and import it to the client.
-
-**or**
-
-Manual configuration:
-
-```sh
-Server: test.herokuapp.com (change test to your app name)
-Port: 443
-Password: The password filled in during deployment
-Encry Method: chacha20-ietf-poly1305 (or other methods you fill in)
-Plugin: v2ray
-Plugin Transport mode: websocket-tls
-Hostname: Same as Server
-Path: "/" + value of V2_Path in app Config Vars
-```
-
-Those without a client can also download from here (Android):
-
-[shadowsocks](https://github.com/shadowsocks/shadowsocks-android/releases/latest/download/shadowsocks--universal-5.1.9.apk)
-
-[v2ray-plugin](https://github.com/shadowsocks/v2ray-plugin-android/releases/latest/download/v2ray-arm64-v8a-1.3.1.apk)
-
-windows:
-
-<https://github.com/shadowsocks/shadowsocks-windows/wiki/Shadowsocks-Windows-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E>
-
-# Reference
-
-https://github.com/ygcaicn/ss-heroku
-
-https://github.com/xiangrui120/v2ray-heroku-undone
-
-https://hub.docker.com/r/shadowsocks/shadowsocks-libev
-
-https://github.com/shadowsocks/v2ray-plugin
+# Ограничения для приложений, запущенных на Heroku:
+- Временная квота работы приложений при бесплатном уровне использования составляет 550 часов в месяц.
+- Контейнер приложения переходит в спящий режим после 30 минут отсутствия запросов к нему. С одной стороны это доставляет неудобства в виде задержек ответа до полминуты после перерыва в активности. С другой стороны, это экономит отведённую временную квоту.
+- Квота на передачу данных по сети равна 2 ТБ в месяц. То есть в случае с прокси это даёт чуть меньше 1 ТБ трафика в месяц.
+- Heroku может запретили развёртывание этого шаблона. Тогда попытка это сделать закончится ошибкой "We couldn't deploy your app because the source code violates the Salesforce Acceptable Use and External-Facing Services Policy". Решить эту проблему можно развёртыванием из своей копии git-репозитория с изменённым именем.
